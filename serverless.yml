@@ -6,10 +6,18 @@ provider:
  region: eu-west-2
 
 functions:
- tasks:
-   handler: tasks.handler
-   events:
-     - http:
-         path: tasks
-         method: get
-         cors: true
+  tasks:
+    handler: tasks.handler
+    events:
+      - http:
+          path: tasks
+          method: get
+          cors: true
+      - http:
+          path: tasks/{taskId}
+          method: delete
+          cors: true
+      - http:
+          path: tasks
+          method: post
+          cors: true

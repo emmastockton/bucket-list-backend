@@ -1,6 +1,10 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/tasks', function (request, response) {
 
@@ -30,9 +34,41 @@ app.get('/tasks', function (request, response) {
       id: 5,
       completed: false
     }
-];
+  ];
 
- response.json(tasks);
-})
+  response.json(tasks);
+
+});
+
+app.delete('/tasks/:taskId', function (request, response) {
+
+  const taskToBeDeleted = request.params.taskId;
+
+  let someResponse = {
+    message: "You tried to delete task ID = " + taskToBeDeleted
+  };
+
+  if(taskToBeDeleted > 5) {
+    response.status(404);
+    someResponse = {
+      message: "Task " + taskToBeDeleted + " does not exist"
+    };
+  }
+
+  response.json(someResponse);
+
+});
+
+app.post('/tasks', function (request, response) {
+
+  const newTask = request.body.enteredTask;
+
+  const taskResponse = {
+    message: "The new task is " + newTask
+  };
+
+  response.json(taskResponse);
+
+});
 
 module.exports.handler = serverless(app);
