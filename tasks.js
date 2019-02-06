@@ -71,4 +71,44 @@ app.post('/tasks', function (request, response) {
 
 });
 
+app.put('/tasks/:taskId', function (request, response) {
+
+  let tasks = [
+    {
+      description: "Climb Mt Kilimanjaro",
+      id: 1,
+      completed: false
+    },
+    {
+      description: "Do the Inca Trail",
+      id: 2,
+      completed: false
+    },
+    {
+      description: "Go skydiving",
+      id: 3,
+      completed: true
+    },
+    {
+      description: "Learn how to play an instrument",
+      id: 4,
+      completed: false
+    },
+    {
+      description: "Get a dog",
+      id: 5,
+      completed: false
+    }
+  ];
+
+  const completedTask = request.params.taskId;
+
+  const aResponse = {
+    message: "This is going to update task " + completedTask
+  };
+
+  response.json(aResponse);
+
+});
+
 module.exports.handler = serverless(app);
