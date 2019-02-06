@@ -101,13 +101,11 @@ app.put('/tasks/:taskId', function (request, response) {
     }
   ];
 
-  const completedTask = request.params.taskId;
+  const taskToComplete = request.params.taskId;
 
-  const aResponse = {
-    message: "This is going to update task " + completedTask
-  };
+  const filteredTask = tasks.filter( task => task.id == taskToComplete );  
 
-  response.json(aResponse);
+  response.json(filteredTask);
 
 });
 
