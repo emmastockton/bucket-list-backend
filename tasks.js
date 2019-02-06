@@ -22,7 +22,7 @@ app.get('/tasks', function (request, response) {
     {
       description: "Go skydiving",
       id: 3,
-      completed: true
+      completed: false
     },
     {
       description: "Learn how to play an instrument",
@@ -87,7 +87,7 @@ app.put('/tasks/:taskId', function (request, response) {
     {
       description: "Go skydiving",
       id: 3,
-      completed: true
+      completed: false
     },
     {
       description: "Learn how to play an instrument",
@@ -101,11 +101,22 @@ app.put('/tasks/:taskId', function (request, response) {
     }
   ];
 
-  const taskToComplete = request.params.taskId;
+  const taskIdToComplete = request.params.taskId;
 
-  const filteredTask = tasks.filter( task => task.id == taskToComplete );  
+  const filteredTask = tasks.filter(task => task.id == taskIdToComplete);
 
-  response.json(filteredTask);
+  let taskToComplete = filteredTask[0];
+
+  taskToComplete.completed = true;
+
+  let taskPosition = tasks.indexOf(taskToComplete);
+
+    for (let x = 0; x < 1; x ++) {
+        tasks.splice(taskPosition, 1);
+        tasks.push(taskToComplete);
+    };
+
+  response.json(tasks);
 
 });
 
