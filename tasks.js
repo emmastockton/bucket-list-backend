@@ -1,73 +1,54 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+app.use(express.json());
+const databaseService = require('./databaseservice');
 var bodyParser = require('body-parser');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/tasks', function (request, response) {
 
-  let tasks = [
-    {
-      description: "Climb Mt Kilimanjaro",
-      id: 1,
-      completed: false
-    },
-    {
-      description: "Do the Inca Trail",
-      id: 2,
-      completed: false
-    },
-    {
-      description: "Go skydiving",
-      id: 3,
-      completed: false
-    },
-    {
-      description: "Learn how to play an instrument",
-      id: 4,
-      completed: false
-    },
-    {
-      description: "Get a dog",
-      id: 5,
-      completed: false
-    }
-  ];
+  databaseService.getTasks()
+  
+  .then(function(results) {
 
-  response.json(tasks);
+    response.json(results);
 
-});
+  })
 
-app.delete('/tasks/:taskId', function (request, response) {
+  .catch(function(error) {
 
-  const taskToBeDeleted = request.params.taskId;
+    response.status(500);
+    response.json(error);
 
-  let someResponse = {
-    message: "You tried to delete task ID = " + taskToBeDeleted
-  };
-
-  if(taskToBeDeleted > 5) {
-    response.status(404);
-    someResponse = {
-      message: "Task " + taskToBeDeleted + " does not exist"
-    };
-  }
-
-  response.json(someResponse);
+  });
 
 });
 
 app.post('/tasks', function (request, response) {
 
-  const newTask = request.body.enteredTask;
+  const taskDescription = request.body.taskDescription;
 
-  const taskResponse = {
-    message: "The new task is " + newTask
-  };
+  databaseService.saveTask(taskDescription)
+  
+  .then(function(results) {
 
-  response.json(taskResponse);
+    response.json(results);
+
+  })
+
+  .catch(function(error) {
+
+    response.status(500);
+    response.json(error);
+
+  });
+});
+
+app.delete('/tasks/:taskId', function (request, response) {
+
+  taskToDelete = request.params.taskId;
+
+  response.json({message: "You have tried to delete task " + taskToDelete});
 
 });
 
