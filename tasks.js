@@ -46,9 +46,22 @@ app.post('/tasks', function (request, response) {
 
 app.delete('/tasks/:taskId', function (request, response) {
 
-  taskToDelete = request.params.taskId;
+  const taskToDelete = request.params.taskId;
 
-  response.json({message: "You have tried to delete task " + taskToDelete});
+  databaseService.deleteTask(taskToDelete)
+  
+  .then(function(results) {
+
+    response.json(results);
+
+  })
+
+  .catch(function(error) {
+
+    response.status(500);
+    response.json(error);
+
+  });
 
 });
 
