@@ -66,10 +66,30 @@ function getTasks() {
         });
     });
  };
+
+ function completeTask(taskIdToComplete) {
+
+    const connection = getDatabaseConnection();
+
+    return new Promise(function(resolve, reject) {
+
+        connection.query("UPDATE Tasks SET Completed = 1 WHERE TaskID = ?", taskIdToComplete, function (error, results, fields) {
+            if (error) {
+                connection.destroy();
+                return reject(error);
+            }
+            else {
+                connection.end();
+                return resolve(results);
+            }
+        })
+    })
+ }
  
 
  module.exports = {
      getTasks,
      saveTask,
-     deleteTask
+     deleteTask,
+     completeTask
  };

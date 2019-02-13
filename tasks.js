@@ -67,7 +67,22 @@ app.delete('/tasks/:taskId', function (request, response) {
 
 app.put('/tasks/:taskId', function (request, response) {
 
-  response.json({message: "You have tried to change task " + request.params.taskId});
+  const taskToComplete = request.params.taskId;
+
+  databaseService.completeTask(taskToComplete)
+  
+  .then(function(results) {
+
+    response.json(results);
+
+  })
+
+  .catch(function(error) {
+
+    response.status(500);
+    response.json(error);
+
+  });
 
 });
 
