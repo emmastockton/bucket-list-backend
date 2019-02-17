@@ -26,6 +26,24 @@ app.get('/tasks', function (request, response) {
 
 });
 
+app.get('/tasks/doneTasks', function (request, response) {
+
+  databaseService.getDoneTasks()
+  
+  .then(function(results) {
+
+    response.json(results);
+
+  })
+
+  .catch(function(error) {
+
+    response.status(500);
+    response.json(error);
+
+  });  
+});
+
 app.post('/tasks', function (request, response) {
 
   const Description = request.body.Description;

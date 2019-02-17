@@ -14,7 +14,26 @@ function getTasks() {
     const connection = getDatabaseConnection();
 
     return new Promise(function(resolve, reject) {
-        connection.query("SELECT * FROM Tasks", function(error, results, fields) {
+        connection.query("SELECT * FROM Tasks WHERE Completed = 0", function(error, results, fields) {
+            if (error) {
+                connection.destroy();
+                return reject(error);
+            }
+            else {
+                connection.end(function() {
+                    return resolve(results);
+                });
+            }
+        });
+    });
+ };
+
+ function getDoneTasks() {
+
+    const connection = getDatabaseConnection();
+
+    return new Promise(function(resolve, reject) {
+        connection.query("SELECT * FROM Tasks WHERE Completed = 1", function(error, results, fields) {
             if (error) {
                 connection.destroy();
                 return reject(error);
@@ -93,6 +112,7 @@ function getTasks() {
 
  module.exports = {
      getTasks,
+     getDoneTasks,
      saveTask,
      deleteTask,
      completeTask
