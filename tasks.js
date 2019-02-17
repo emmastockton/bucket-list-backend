@@ -1,7 +1,9 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 app.use(express.json());
+app.use(cors());
 const databaseService = require('./databaseservice');
 var bodyParser = require('body-parser');
 
@@ -26,9 +28,9 @@ app.get('/tasks', function (request, response) {
 
 app.post('/tasks', function (request, response) {
 
-  const taskDescription = request.body.taskDescription;
+  const Description = request.body.Description;
 
-  databaseService.saveTask(taskDescription)
+  databaseService.saveTask(Description)
   
   .then(function(results) {
 
@@ -65,9 +67,9 @@ app.delete('/tasks/:taskId', function (request, response) {
 
 });
 
-app.put('/tasks/:taskId', function (request, response) {
+app.put('/tasks/:TaskID', function (request, response) {
 
-  const taskToComplete = request.params.taskId;
+  const taskToComplete = request.params.TaskID;
 
   databaseService.completeTask(taskToComplete)
   

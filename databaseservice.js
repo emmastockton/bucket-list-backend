@@ -20,29 +20,31 @@ function getTasks() {
                 return reject(error);
             }
             else {
-                connection.end();
-                return resolve(results);
+                connection.end(function() {
+                    return resolve(results);
+                });
             }
         });
     });
  };
 
- function saveTask(taskDescription) {
+ function saveTask(Description) {
 
     const connection = getDatabaseConnection();
 
     return new Promise(function(resolve, reject) {
         
-        const postData = {Description: taskDescription, UserID: 1, Completed: false};
+        const postData = {Description: Description, UserID: 1, Completed: false};
         connection.query('INSERT INTO Tasks SET ?', postData, function (error, results, fields) {
             if (error) {
                 connection.destroy();
                 return reject(error);
             }
             else {
-                connection.end();
-                return resolve(results);
-            }  
+                connection.end(function() {
+                    return resolve(results);
+                });
+            } 
         });
 
     });
@@ -60,8 +62,9 @@ function getTasks() {
                 return reject(error);
             }
             else {
-                connection.end();
-                return resolve(results);
+                connection.end(function() {
+                    return resolve(results);
+                });
             }
         });
     });
@@ -79,11 +82,12 @@ function getTasks() {
                 return reject(error);
             }
             else {
-                connection.end();
-                return resolve(results);
+                connection.end(function() {
+                    return resolve(results);
+                });
             }
-        })
-    })
+        });
+    });
  }
  
 
