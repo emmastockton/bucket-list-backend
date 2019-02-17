@@ -106,4 +106,27 @@ app.put('/tasks/:TaskID', function (request, response) {
 
 });
 
+app.put('/tasks/editTask/:TaskID', function (request, response) {
+
+  const taskToEdit = request.params.TaskID;
+
+  const editedTask = request.body.Description;
+
+  databaseService.editTask(editedTask, taskToEdit)
+  
+  .then(function(results) {
+
+    response.json(results);
+
+  })
+
+  .catch(function(error) {
+
+    response.status(500);
+    response.json(error);
+
+  });
+
+});
+
 module.exports.handler = serverless(app);

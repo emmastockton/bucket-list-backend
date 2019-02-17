@@ -34,3 +34,7 @@ functions:
           path: tasks/{taskId}
           method: put
           cors: true
+      - http:
+          path: tasks/editTask/{taskId}
+          method: put
+          cors: true

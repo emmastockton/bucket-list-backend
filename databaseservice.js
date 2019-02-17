@@ -107,7 +107,27 @@ function getTasks() {
             }
         });
     });
- }
+ };
+
+ function editTask(editedDecription, taskId) {
+
+    const connection = getDatabaseConnection();
+
+    return new Promise(function(resolve, reject) {
+
+        connection.query("UPDATE Tasks SET Description ? WHERE TaskID = ?", editedDecription, taskId, function (error, results, fields) {
+            if (error) {
+                connection.destroy();
+                return reject(error);
+            }
+            else {
+                connection.end(function() {
+                    return resolve(results);
+                });
+            }
+        });
+    });
+ };
  
 
  module.exports = {
@@ -115,5 +135,6 @@ function getTasks() {
      getDoneTasks,
      saveTask,
      deleteTask,
-     completeTask
+     completeTask,
+     editTask
  };
