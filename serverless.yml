@@ -35,6 +35,6 @@ functions:
           method: put
           cors: true
       - http:
-          path: tasks/editTask/{taskId}
+          path: tasks/editTask/{editedDescription}
           method: put
           cors: true

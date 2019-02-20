@@ -106,13 +106,11 @@ app.put('/tasks/:TaskID', function (request, response) {
 
 });
 
-app.put('/tasks/editTask/:TaskID', function (request, response) {
+app.put('/tasks/editTask/:editedDescription', function (request, response) {
 
-  const taskToEdit = request.params.TaskID;
+  const editedTask = request.params.editedDescription;
 
-  const editedTask = request.body.Description;
-
-  databaseService.editTask(editedTask, taskToEdit)
+  databaseService.editTask(editedTask)
   
   .then(function(results) {
 

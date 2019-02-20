@@ -109,13 +109,13 @@ function getTasks() {
     });
  };
 
- function editTask(editedDecription, taskId) {
+ function editTask(editedDecription) {
 
     const connection = getDatabaseConnection();
 
     return new Promise(function(resolve, reject) {
 
-        connection.query("UPDATE Tasks SET Description ? WHERE TaskID = ?", editedDecription, taskId, function (error, results, fields) {
+        connection.query("UPDATE Tasks SET Description = ? WHERE TaskID = 42", editedDecription, function (error, results, fields) {
             if (error) {
                 connection.destroy();
                 return reject(error);
