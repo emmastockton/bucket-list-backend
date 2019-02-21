@@ -110,7 +110,9 @@ app.put('/tasks/editTask/:editedDescription', function (request, response) {
 
   const editedTask = request.params.editedDescription;
 
-  databaseService.editTask(editedTask)
+  const identifier = request.params.TaskID;
+
+  databaseService.editTask(editedTask, identifier)
   
   .then(function(results) {
 
